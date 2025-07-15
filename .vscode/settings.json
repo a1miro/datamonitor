@@ -1,4 +1,10 @@
 {
+    // Qt Configuration
+    // Update these paths to match your Qt installation:
+    // - For Qt installed via Qt Online Installer: ~/Qt/6.x/gcc_64/
+    // - For system package manager: /usr/include/qt6/ or /usr/include/qt6/
+    // - For custom installation: adjust paths accordingly
+
     "cmake.configureOnOpen": true,
     "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.generator": "Unix Makefiles",
@@ -15,6 +21,11 @@
     "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/src",
+        "${env:HOME}/Qt/6.*/gcc_64/include",
+        "${env:HOME}/Qt/6.*/gcc_64/include/QtCore",
+        "${env:HOME}/Qt/6.*/gcc_64/include/QtQuick",
+        "${env:HOME}/Qt/6.*/gcc_64/include/QtQml",
+        "${env:HOME}/Qt/6.*/gcc_64/include/QtGui",
         "/usr/include/qt6",
         "/usr/include/qt6/QtCore",
         "/usr/include/qt6/QtQuick",

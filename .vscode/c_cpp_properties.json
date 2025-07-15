@@ -6,6 +6,13 @@
             "includePath": [
                 "${workspaceFolder}/src/**",
                 "${workspaceFolder}/build/**",
+                "${env:HOME}/Qt/6.*/gcc_64/include/**",
+                "${env:HOME}/Qt/6.*/gcc_64/include",
+                "${env:HOME}/Qt/6.*/gcc_64/include/QtCore",
+                "${env:HOME}/Qt/6.*/gcc_64/include/QtQuick",
+                "${env:HOME}/Qt/6.*/gcc_64/include/QtQml",
+                "${env:HOME}/Qt/6.*/gcc_64/include/QtGui",
+                "${env:HOME}/Qt/6.*/gcc_64/include/QtWidgets",
                 "/usr/include/qt6/**",
                 "/usr/include/qt6",
                 "/usr/include/qt6/QtCore",
