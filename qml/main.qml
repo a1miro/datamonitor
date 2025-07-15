@@ -45,7 +45,7 @@ ApplicationWindow {
                     checkable: true
                     checked: true  // Start with data generation enabled
                     Layout.preferredWidth: 80
-                    
+
                     background: Rectangle {
                         color: startStopButton.checked ? "#e74c3c" : "#27ae60"
                         radius: 5
@@ -59,7 +59,7 @@ ApplicationWindow {
                     text: "Frequency:"
                     Layout.alignment: Qt.AlignRight
                 }
-                
+
                 Slider {
                     id: frequencySlider
                     from: 0.1
@@ -68,7 +68,7 @@ ApplicationWindow {
                     stepSize: 0.1
                     Layout.preferredWidth: 150
                 }
-                
+
                 Label {
                     text: frequencySlider.value.toFixed(1) + " Hz"
                     Layout.preferredWidth: 50
@@ -79,7 +79,7 @@ ApplicationWindow {
                     text: "Amplitude:"
                     Layout.alignment: Qt.AlignRight
                 }
-                
+
                 Slider {
                     id: amplitudeSlider
                     from: 0.1
@@ -88,7 +88,7 @@ ApplicationWindow {
                     stepSize: 0.1
                     Layout.preferredWidth: 150
                 }
-                
+
                 Label {
                     text: amplitudeSlider.value.toFixed(1)
                     Layout.preferredWidth: 50
@@ -99,7 +99,7 @@ ApplicationWindow {
                     text: "Time Window:"
                     Layout.alignment: Qt.AlignRight
                 }
-                
+
                 Slider {
                     id: timeWindowSlider
                     from: 1.0
@@ -107,12 +107,12 @@ ApplicationWindow {
                     value: 5.0
                     stepSize: 0.5
                     Layout.preferredWidth: 150
-                    
+
                     onValueChanged: {
                         plotView.timeWindow = value
                     }
                 }
-                
+
                 Label {
                     text: timeWindowSlider.value.toFixed(1) + " s"
                     Layout.preferredWidth: 50
@@ -157,7 +157,7 @@ ApplicationWindow {
                 anchors.rightMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Clear Data"
-                
+
                 onClicked: {
                     dataGenerator.clearData()
                 }

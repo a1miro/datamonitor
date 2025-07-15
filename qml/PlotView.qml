@@ -29,7 +29,7 @@ Rectangle {
         onPaint: {
             var ctx = getContext("2d")
             ctx.clearRect(0, 0, width, height)
-            
+
             ctx.strokeStyle = "#ecf0f1"
             ctx.lineWidth = 1
 
@@ -63,13 +63,14 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 30  // Fixed spacing instead of dynamic
+        spacing: 30 // Fixed spacing instead of dynamic
 
         Repeater {
             model: 6
             Text {
-                text: (plotRenderer.dataBounds.bottom + 
-                      (plotRenderer.dataBounds.height * (5 - index) / 5)).toFixed(1)
+                // Fix: dataBounds.y is the minimum, dataBounds.y + dataBounds.height is the maximum
+                text: (plotRenderer.dataBounds.y +
+                       (plotRenderer.dataBounds.height * (5 - index) / 5)).toFixed(1)
                 font.pixelSize: 10
                 color: "#7f8c8d"
             }
@@ -80,13 +81,13 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 50  // Fixed spacing instead of dynamic
+        spacing: 50 // Fixed spacing instead of dynamic
 
         Repeater {
             model: 6
             Text {
-                text: (plotRenderer.dataBounds.left + 
-                      (plotRenderer.dataBounds.width * index / 5)).toFixed(1) + "s"
+                text: (plotRenderer.dataBounds.left +
+                       (plotRenderer.dataBounds.width * index / 5)).toFixed(1) + "s"
                 font.pixelSize: 10
                 color: "#7f8c8d"
             }
@@ -98,12 +99,12 @@ Rectangle {
         id: plotRenderer
         anchors.fill: parent
         anchors.margins: 40
-        
+
         lineColor: "#e74c3c"
         lineWidth: 2.0
         autoScale: true
         timeWindow: root.timeWindow
-        
+
         // Update data bounds when timeWindow changes
         onTimeWindowChanged: {
             // Trigger auto-scaling recalculation

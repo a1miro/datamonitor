@@ -36,7 +36,7 @@ void DataGenerator::setRunning(bool running)
 {
     if (m_running != running) {
         m_running = running;
-        
+
         if (m_running) {
             qDebug() << "Starting data generation with freq:" << m_frequency << "amp:" << m_amplitude;
             m_timer->start();
@@ -45,7 +45,7 @@ void DataGenerator::setRunning(bool running)
             m_timer->stop();
             qDebug() << "Data generation stopped";
         }
-        
+
         emit runningChanged();
     }
 }
@@ -105,35 +105,35 @@ void DataGenerator::generateDataPoint()
 {
     // Generate 5 points per timer tick to achieve 1000 Hz
     bool shouldEmitSignal = false;
-    
+
     for (int i = 0; i < 5; ++i) {
         // Generate sine wave data point
         double y = m_amplitude * qSin(2.0 * M_PI * m_frequency * m_time);
         QPointF newPoint(m_time, y);
-        
+
         {
             QMutexLocker locker(&m_dataMutex);
-            
+
             // Add new point
             m_dataBuffer.append(newPoint);
-            
+
             // Remove old points if buffer is full
             if (m_dataBuffer.size() > m_bufferSize) {
                 m_dataBuffer.removeFirst();
             }
-            
+
             // Emit signal every 50 points for UI updates
             m_signalCounter++;
-            if (m_signalCounter >= 50) {  
+            if (m_signalCounter >= 50) {
                 m_signalCounter = 0;
                 shouldEmitSignal = true;
             }
         }
-        
+
         // Advance time
         m_time += m_timeStep;
     }
-    
+
     // Emit signal for UI update (outside mutex for better performance)
     if (shouldEmitSignal) {
         emit dataChanged();

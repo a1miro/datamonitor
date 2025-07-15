@@ -126,12 +126,11 @@ QPointF PlotNode::mapToView(const QPointF &dataPoint, const QRectF &bounds, cons
 
     // Map from data coordinates to view coordinates
     double x = (dataPoint.x() - bounds.left()) / bounds.width() * viewSize.width();
-    double y = viewSize.height() - (dataPoint.y() - bounds.bottom()) / bounds.height() * viewSize.height();
 
-    // DON'T clamp to view bounds - this was causing the straight line!
-    // The coordinates should be allowed to go outside the view for proper rendering
-    // x = qBound(0.0, x, viewSize.width());
-    // y = qBound(0.0, y, viewSize.height());
+    // For Y mapping: bounds.top() is minimum Y, bounds.bottom() is maximum Y
+    // We want minimum Y to map to bottom of view, maximum Y to map to top of view
+    double normalizedY = (dataPoint.y() - bounds.top()) / bounds.height();
+    double y = viewSize.height() * (1.0 - normalizedY);
 
     return QPointF(x, y);
 }
