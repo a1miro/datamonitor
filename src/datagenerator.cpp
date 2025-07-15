@@ -11,13 +11,16 @@ DataGenerator::DataGenerator(QObject *parent)
     , m_bufferSize(5000)  // Store 5 seconds of data at 1000 Hz
     , m_time(0.0)
     , m_timeStep(0.001)  // 1ms = 0.001s
+    , m_signalCounter(0)
 {
-    // Set timer to 1ms interval for high-frequency data generation
-    m_timer->setInterval(1);
+    // Use 5ms interval but generate multiple points per tick to achieve 1000 Hz
+    // This is more reliable than 1ms timer
+    m_timer->setInterval(5);  // 5ms = 200 Hz timer
     m_timer->setSingleShot(false);
-    
+    m_timer->setTimerType(Qt::PreciseTimer);
+
     connect(m_timer, &QTimer::timeout, this, &DataGenerator::generateDataPoint);
-    
+
     // Reserve buffer space
     m_dataBuffer.reserve(m_bufferSize);
 }
@@ -33,7 +36,7 @@ void DataGenerator::setRunning(bool running)
 {
     if (m_running != running) {
         m_running = running;
-        
+
         if (m_running) {
             m_timer->start();
             qDebug() << "Data generation started";
@@ -41,7 +44,7 @@ void DataGenerator::setRunning(bool running)
             m_timer->stop();
             qDebug() << "Data generation stopped";
         }
-        
+
         emit runningChanged();
     }
 }
@@ -67,7 +70,7 @@ void DataGenerator::setBufferSize(int size)
     if (m_bufferSize != size && size > 0) {
         QMutexLocker locker(&m_dataMutex);
         m_bufferSize = size;
-        
+
         // Resize buffer if needed
         if (m_dataBuffer.size() > m_bufferSize) {
             // Keep the most recent data
@@ -75,7 +78,7 @@ void DataGenerator::setBufferSize(int size)
             m_dataBuffer.remove(0, excess);
         }
         m_dataBuffer.reserve(m_bufferSize);
-        
+
         emit bufferSizeChanged();
     }
 }
@@ -91,30 +94,54 @@ void DataGenerator::clearData()
     QMutexLocker locker(&m_dataMutex);
     m_dataBuffer.clear();
     m_time = 0.0;
+    m_signalCounter = 0;
     emit dataChanged();
 }
 
 void DataGenerator::generateDataPoint()
 {
-    // Generate sine wave data point
-    double y = m_amplitude * qSin(2.0 * M_PI * m_frequency * m_time);
-    QPointF newPoint(m_time, y);
-    
-    {
-        QMutexLocker locker(&m_dataMutex);
-        
-        // Add new point
-        m_dataBuffer.append(newPoint);
-        
-        // Remove old points if buffer is full
-        if (m_dataBuffer.size() > m_bufferSize) {
-            m_dataBuffer.removeFirst();
+    // Generate 5 points per timer tick to achieve 1000 Hz (5ms * 5 points = 25ms = 40 Hz * 25 = 1000 Hz)
+    bool shouldEmitSignal = false;
+
+    for (int i = 0; i < 5; ++i) {
+        // Generate sine wave data point
+        double y = m_amplitude * qSin(2.0 * M_PI * m_frequency * m_time);
+        QPointF newPoint(m_time, y);
+
+        // Debug output for the first few points
+        static int debugCount = 0;
+        if (debugCount < 20) {
+            qDebug() << "Generated point:" << debugCount << "time:" << m_time
+                << "y:" << y << "freq:" << m_frequency << "amp:" << m_amplitude;
+            debugCount++;
         }
+
+        {
+            QMutexLocker locker(&m_dataMutex);
+
+            // Add new point
+            m_dataBuffer.append(newPoint);
+
+            // Remove old points if buffer is full
+            if (m_dataBuffer.size() > m_bufferSize) {
+                m_dataBuffer.removeFirst();
+            }
+
+            // Only emit signal every ~80ms (approximately 12.5 FPS for UI updates)
+            // This reduces the signal emission significantly
+            m_signalCounter++;
+            if (m_signalCounter >= 80) {  // 80 points = 80ms
+                m_signalCounter = 0;
+                shouldEmitSignal = true;
+            }
+        }
+
+        // Advance time
+        m_time += m_timeStep;
     }
-    
-    // Advance time
-    m_time += m_timeStep;
-    
-    // Emit signal for UI update
-    emit dataChanged();
+
+    // Emit signal for UI update (outside mutex for better performance)
+    if (shouldEmitSignal) {
+        emit dataChanged();
+    }
 }

@@ -49,14 +49,15 @@ private:
     QTimer *m_timer;
     QVector<QPointF> m_dataBuffer;
     QMutex m_dataMutex;
-    
+
     bool m_running;
     double m_frequency;
     double m_amplitude;
     int m_bufferSize;
-    
+
     double m_time;
     double m_timeStep;
+    int m_signalCounter;  // Counter to reduce signal emission frequency
 };
 
 #endif // DATAGENERATOR_H
