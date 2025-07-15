@@ -43,6 +43,7 @@ ApplicationWindow {
                     id: startStopButton
                     text: checked ? "Stop" : "Start"
                     checkable: true
+                    checked: true  // Start with data generation enabled
                     Layout.preferredWidth: 80
                     
                     background: Rectangle {

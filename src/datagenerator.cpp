@@ -36,15 +36,16 @@ void DataGenerator::setRunning(bool running)
 {
     if (m_running != running) {
         m_running = running;
-
+        
         if (m_running) {
+            qDebug() << "Starting data generation with freq:" << m_frequency << "amp:" << m_amplitude;
             m_timer->start();
             qDebug() << "Data generation started";
         } else {
             m_timer->stop();
             qDebug() << "Data generation stopped";
         }
-
+        
         emit runningChanged();
     }
 }
@@ -52,6 +53,7 @@ void DataGenerator::setRunning(bool running)
 void DataGenerator::setFrequency(double frequency)
 {
     if (qAbs(m_frequency - frequency) > 0.001) {
+        qDebug() << "Setting frequency from" << m_frequency << "to" << frequency;
         m_frequency = frequency;
         emit frequencyChanged();
     }
@@ -60,6 +62,7 @@ void DataGenerator::setFrequency(double frequency)
 void DataGenerator::setAmplitude(double amplitude)
 {
     if (qAbs(m_amplitude - amplitude) > 0.001) {
+        qDebug() << "Setting amplitude from" << m_amplitude << "to" << amplitude;
         m_amplitude = amplitude;
         emit amplitudeChanged();
     }
@@ -100,46 +103,37 @@ void DataGenerator::clearData()
 
 void DataGenerator::generateDataPoint()
 {
-    // Generate 5 points per timer tick to achieve 1000 Hz (5ms * 5 points = 25ms = 40 Hz * 25 = 1000 Hz)
+    // Generate 5 points per timer tick to achieve 1000 Hz
     bool shouldEmitSignal = false;
-
+    
     for (int i = 0; i < 5; ++i) {
         // Generate sine wave data point
         double y = m_amplitude * qSin(2.0 * M_PI * m_frequency * m_time);
         QPointF newPoint(m_time, y);
-
-        // Debug output for the first few points
-        static int debugCount = 0;
-        if (debugCount < 20) {
-            qDebug() << "Generated point:" << debugCount << "time:" << m_time
-                << "y:" << y << "freq:" << m_frequency << "amp:" << m_amplitude;
-            debugCount++;
-        }
-
+        
         {
             QMutexLocker locker(&m_dataMutex);
-
+            
             // Add new point
             m_dataBuffer.append(newPoint);
-
+            
             // Remove old points if buffer is full
             if (m_dataBuffer.size() > m_bufferSize) {
                 m_dataBuffer.removeFirst();
             }
-
-            // Only emit signal every ~80ms (approximately 12.5 FPS for UI updates)
-            // This reduces the signal emission significantly
+            
+            // Emit signal every 50 points for UI updates
             m_signalCounter++;
-            if (m_signalCounter >= 80) {  // 80 points = 80ms
+            if (m_signalCounter >= 50) {  
                 m_signalCounter = 0;
                 shouldEmitSignal = true;
             }
         }
-
+        
         // Advance time
         m_time += m_timeStep;
     }
-
+    
     // Emit signal for UI update (outside mutex for better performance)
     if (shouldEmitSignal) {
         emit dataChanged();

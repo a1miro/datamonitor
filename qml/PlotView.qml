@@ -63,7 +63,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
-        spacing: height / 5
+        spacing: 30  // Fixed spacing instead of dynamic
 
         Repeater {
             model: 6
@@ -80,7 +80,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: width / 5
+        spacing: 50  // Fixed spacing instead of dynamic
 
         Repeater {
             model: 6

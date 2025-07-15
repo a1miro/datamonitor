@@ -128,9 +128,10 @@ QPointF PlotNode::mapToView(const QPointF &dataPoint, const QRectF &bounds, cons
     double x = (dataPoint.x() - bounds.left()) / bounds.width() * viewSize.width();
     double y = viewSize.height() - (dataPoint.y() - bounds.bottom()) / bounds.height() * viewSize.height();
 
-    // Clamp to view bounds to prevent overflow
-    x = qBound(0.0, x, viewSize.width());
-    y = qBound(0.0, y, viewSize.height());
+    // DON'T clamp to view bounds - this was causing the straight line!
+    // The coordinates should be allowed to go outside the view for proper rendering
+    // x = qBound(0.0, x, viewSize.width());
+    // y = qBound(0.0, y, viewSize.height());
 
     return QPointF(x, y);
 }

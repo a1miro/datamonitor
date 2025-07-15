@@ -127,16 +127,12 @@ QSGNode *PlotRenderer::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 void PlotRenderer::calculateAutoBounds()
 {
     if (m_data.isEmpty()) {
-        qDebug() << "calculateAutoBounds: No data available";
         return;
     }
 
     // Find the latest time point
     double maxTime = m_data.last().x();
     double minTime = maxTime - m_timeWindow;
-
-    qDebug() << "calculateAutoBounds: Time range" << minTime << "to" << maxTime
-        << "window:" << m_timeWindow << "data points:" << m_data.size();
 
     // Find Y bounds for visible data
     double minY = std::numeric_limits<double>::max();
@@ -153,9 +149,6 @@ void PlotRenderer::calculateAutoBounds()
         }
     }
 
-    qDebug() << "calculateAutoBounds: Visible points:" << visiblePointCount
-        << "Y range:" << minY << "to" << maxY;
-
     if (foundAnyPoints) {
         // Add some padding (10% on each side)
         double yRange = maxY - minY;
@@ -163,16 +156,13 @@ void PlotRenderer::calculateAutoBounds()
             yRange = 2.0;  // Default range if all values are the same
             minY -= 1.0;
             maxY += 1.0;
-            qDebug() << "calculateAutoBounds: Using default Y range, new bounds:" << minY << "to" << maxY;
         } else {
             double padding = yRange * 0.1;
             minY -= padding;
             maxY += padding;
-            qDebug() << "calculateAutoBounds: Added padding, new bounds:" << minY << "to" << maxY;
         }
 
         QRectF newBounds(minTime, minY, m_timeWindow, maxY - minY);
-        qDebug() << "calculateAutoBounds: Setting new bounds:" << newBounds;
         setDataBounds(newBounds);
     }
 }
