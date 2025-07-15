@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "ms-vscode.vscode-qt-support",
+        "seanwu.vscode-qt-for-python",
+        "ms-vscode.vscode-qml",
+        "bbenoist.qml",
+        "ms-vscode.hexeditor",
+        "vadimcn.vscode-lldb",
+        "webfreak.debug",
+        "ms-vscode.makefile-tools"
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "cmake.configureOnOpen": true,
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.generator": "Unix Makefiles",
+    "cmake.buildToolArgs": [
+        "-j8"
+    ],
+    "files.associations": {
+        "*.qml": "qml",
+        "*.h": "cpp",
+        "*.cpp": "cpp"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/src",
+        "/usr/include/qt6",
+        "/usr/include/qt6/QtCore",
+        "/usr/include/qt6/QtQuick",
+        "/usr/include/qt6/QtQml",
+        "/usr/include/qt6/QtGui"
+    ],
+    "qt-for-python.qml.languageServer.enabled": true,
+    "qmlls.enabled": true,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "search.exclude": {
+        "**/build": true,
+        "**/build-*": true,
+        "**/.git": true,
+        "**/node_modules": true
+    },
+    "cmake.configureArgs": [
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+    ],
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json"
+}
