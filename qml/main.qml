@@ -6,8 +6,10 @@ import DataMonitor 1.0
 
 ApplicationWindow {
     id: window
-    width: 1200
-    height: 800
+    width: Screen.width / 2
+    height: Screen.height / 2
+    x: (Screen.width - width) / 2
+    y: (Screen.height - height) / 2
     visible: true
     title: qsTr("Real-Time Data Monitor")
 
