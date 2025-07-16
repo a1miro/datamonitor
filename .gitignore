@@ -5,6 +5,11 @@ build-*/
 # Qt generated files
 *.qmltypes
 qmldir
+.qt
+.rcc
+DataMonitor
+meta_types
+qmltypes
 
 # CMake
 CMakeCache.txt
@@ -30,3 +35,6 @@ Makefile
 *~
 *.tmp
 *.bak
+
+# Ninja
+build.ninja

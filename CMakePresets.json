@@ -16,6 +16,34 @@
             }
         },
         {
+            "name": "linux-debug",
+            "displayName": "Linux Debug",
+            "description": "Debug build for Linux",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release",
+            "description": "Release build for Linux",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
             "name": "macos-debug",
             "displayName": "macOS Debug",
             "description": "Debug build for macOS (Universal Binary)",
@@ -134,6 +162,18 @@
     ],
     "buildPresets": [
         {
+            "name": "linux-debug",
+            "displayName": "Build Linux Debug",
+            "configurePreset": "linux-debug",
+            "jobs": 8
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Build Linux Release",
+            "configurePreset": "linux-release",
+            "jobs": 8
+        },
+        {
             "name": "macos-debug",
             "displayName": "Build macOS Debug",
             "configurePreset": "macos-debug",
@@ -175,6 +215,16 @@
         }
     ],
     "testPresets": [
+        {
+            "name": "linux-debug",
+            "displayName": "Test Linux Debug",
+            "configurePreset": "linux-debug"
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Test Linux Release",
+            "configurePreset": "linux-release"
+        },
         {
             "name": "macos-debug",
             "displayName": "Test macOS Debug",
