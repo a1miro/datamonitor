@@ -99,6 +99,7 @@ Rectangle {
         id: plotRenderer
         anchors.fill: parent
         anchors.margins: 40
+        antialiasing: true
 
         lineColor: "#e74c3c"
         lineWidth: 2.0
@@ -119,7 +120,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        text: "Real-Time Sine Wave Data"
+        text: qsTr("Real-Time Sine Wave Data")
         font.pixelSize: 16
         font.bold: true
         color: "#2c3e50"

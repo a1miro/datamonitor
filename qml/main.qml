@@ -22,6 +22,8 @@ ApplicationWindow {
 
         onDataChanged: {
             plotView.updateData()
+            plotView1.updateData()
+            plotView2.updateData()
         }
     }
 
@@ -45,7 +47,7 @@ ApplicationWindow {
                     id: startStopButton
                     text: checked ? "Stop" : "Start"
                     checkable: true
-                    checked: true  // Start with data generation enabled
+                    checked: true // Start with data generation enabled
                     Layout.preferredWidth: 80
 
                     background: Rectangle {
@@ -112,6 +114,8 @@ ApplicationWindow {
 
                     onValueChanged: {
                         plotView.timeWindow = value
+                        plotView1.timeWindow = value
+                        plotView2.timeWindow = value
                     }
                 }
 
@@ -169,6 +173,22 @@ ApplicationWindow {
         // Plot View
         PlotView {
             id: plotView
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            dataGenerator: dataGenerator
+            timeWindow: timeWindowSlider.value
+        }
+
+        PlotView {
+            id: plotView1
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            dataGenerator: dataGenerator
+            timeWindow: timeWindowSlider.value
+        }
+
+        PlotView {
+            id: plotView2
             Layout.fillWidth: true
             Layout.fillHeight: true
             dataGenerator: dataGenerator
