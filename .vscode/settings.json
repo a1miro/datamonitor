@@ -45,6 +45,27 @@
         "**/.git": true,
         "**/node_modules": true
     },
+    "files.exclude": {
+        "**/build": true,
+        "**/build-*": true,
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/.qt": true,
+        "**/.rcc": true,
+        "**/CMakeCache.txt": true,
+        "**/CMakeFiles": true,
+        "**/cmake_install.cmake": true,
+        "**/compile_commands.json": false
+    },
+    "C_Cpp.files.exclude": {
+        "**/build/**": true,
+        "**/build-*/**": true,
+        "**/.qt/**": true,
+        "**/.rcc/**": true,
+        "**/CMakeFiles/**": true
+    },
+    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.intelliSenseEngineFallback": "disabled",
     "cmake.configureArgs": [
         "-DCMAKE_BUILD_TYPE=Debug",
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"

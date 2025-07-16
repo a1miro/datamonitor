@@ -5,7 +5,6 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/build/**",
                 "${env:HOME}/Qt/6.*/gcc_64/include/**",
                 "${env:HOME}/Qt/6.*/gcc_64/include",
                 "${env:HOME}/Qt/6.*/gcc_64/include/QtCore",
