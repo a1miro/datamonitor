@@ -142,6 +142,128 @@
             }
         },
         {
+            "label": "Build macOS Universal",
+            "type": "shell",
+            "command": "${workspaceFolder}/build.sh",
+            "args": [
+                "macos",
+                "Debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build iOS Device",
+            "type": "shell",
+            "command": "${workspaceFolder}/build.sh",
+            "args": [
+                "ios-device",
+                "Debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build iOS Simulator",
+            "type": "shell",
+            "command": "${workspaceFolder}/build.sh",
+            "args": [
+                "ios-simulator",
+                "Debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build iOS Device Release",
+            "type": "shell",
+            "command": "${workspaceFolder}/build.sh",
+            "args": [
+                "ios-device",
+                "Release"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build iOS Simulator Release",
+            "type": "shell",
+            "command": "${workspaceFolder}/build.sh",
+            "args": [
+                "ios-simulator",
+                "Release"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Clean All Builds",
+            "type": "shell",
+            "command": "${workspaceFolder}/build.sh",
+            "args": [
+                "clean"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
             "label": "Rebuild All",
             "dependsOrder": "sequence",
             "dependsOn": [
