@@ -2,7 +2,8 @@
 #include <QDebug>
 #include <QtMath>
 
-DataGenerator::DataGenerator(QObject *parent)
+// Base DataSource class implementation
+DataSource::DataSource(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
     , m_running(false)
@@ -19,20 +20,20 @@ DataGenerator::DataGenerator(QObject *parent)
     m_timer->setSingleShot(false);
     m_timer->setTimerType(Qt::PreciseTimer);
 
-    connect(m_timer, &QTimer::timeout, this, &DataGenerator::generateDataPoint);
+    connect(m_timer, &QTimer::timeout, this, &DataSource::retrieveDataPoint);
 
     // Reserve buffer space
     m_dataBuffer.reserve(m_bufferSize);
 }
 
-DataGenerator::~DataGenerator()
+DataSource::~DataSource()
 {
     if (m_timer->isActive()) {
         m_timer->stop();
     }
 }
 
-void DataGenerator::setRunning(bool running)
+void DataSource::setRunning(bool running)
 {
     if (m_running != running) {
         m_running = running;
@@ -50,7 +51,7 @@ void DataGenerator::setRunning(bool running)
     }
 }
 
-void DataGenerator::setFrequency(double frequency)
+void DataSource::setFrequency(double frequency)
 {
     if (qAbs(m_frequency - frequency) > 0.001) {
         qDebug() << "Setting frequency from" << m_frequency << "to" << frequency;
@@ -59,7 +60,7 @@ void DataGenerator::setFrequency(double frequency)
     }
 }
 
-void DataGenerator::setAmplitude(double amplitude)
+void DataSource::setAmplitude(double amplitude)
 {
     if (qAbs(m_amplitude - amplitude) > 0.001) {
         qDebug() << "Setting amplitude from" << m_amplitude << "to" << amplitude;
@@ -68,7 +69,7 @@ void DataGenerator::setAmplitude(double amplitude)
     }
 }
 
-void DataGenerator::setBufferSize(int size)
+void DataSource::setBufferSize(int size)
 {
     if (m_bufferSize != size && size > 0) {
         QMutexLocker locker(&m_dataMutex);
@@ -86,13 +87,13 @@ void DataGenerator::setBufferSize(int size)
     }
 }
 
-QVector<QPointF> DataGenerator::getData()
+QVector<QPointF> DataSource::getData()
 {
     QMutexLocker locker(&m_dataMutex);
     return m_dataBuffer;
 }
 
-void DataGenerator::clearData()
+void DataSource::clearData()
 {
     QMutexLocker locker(&m_dataMutex);
     m_dataBuffer.clear();
@@ -101,14 +102,14 @@ void DataGenerator::clearData()
     emit dataChanged();
 }
 
-void DataGenerator::generateDataPoint()
+void DataSource::retrieveDataPoint()
 {
     // Generate 5 points per timer tick to achieve 1000 Hz
     bool shouldEmitSignal = false;
 
     for (int i = 0; i < 5; ++i) {
-        // Generate sine wave data point
-        double y = m_amplitude * qSin(2.0 * M_PI * m_frequency * m_time);
+        // Generate waveform data point using virtual function
+        double y = generateValue(m_time);
         QPointF newPoint(m_time, y);
 
         {
@@ -137,5 +138,42 @@ void DataGenerator::generateDataPoint()
     // Emit signal for UI update (outside mutex for better performance)
     if (shouldEmitSignal) {
         emit dataChanged();
+    }
+}
+
+// SineWave implementation
+SineWave::SineWave(QObject* parent) : DataSource(parent)
+{
+}
+
+double SineWave::generateValue(double time)
+{
+    return m_amplitude * qSin(2.0 * M_PI * m_frequency * time);
+}
+
+// SquareWave implementation
+SquareWave::SquareWave(QObject* parent) : DataSource(parent)
+{
+}
+
+double SquareWave::generateValue(double time)
+{
+    double phase = fmod(m_frequency * time, 1.0);
+    return m_amplitude * (phase < 0.5 ? 1.0 : -1.0);
+}
+
+// TriangleWave implementation
+TriangleWave::TriangleWave(QObject* parent) : DataSource(parent)
+{
+}
+
+double TriangleWave::generateValue(double time)
+{
+    double phase = fmod(m_frequency * time, 1.0);
+    if (phase < 0.5) {
+        return m_amplitude * (4.0 * phase - 1.0);
+    }
+    else {
+        return m_amplitude * (3.0 - 4.0 * phase);
     }
 }

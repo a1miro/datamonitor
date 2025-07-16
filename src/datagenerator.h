@@ -1,5 +1,5 @@
-#ifndef DATAGENERATOR_H
-#define DATAGENERATOR_H
+#ifndef DATASOURCE_H
+#define DATASOURCE_H
 
 #include <QObject>
 #include <QTimer>
@@ -8,7 +8,7 @@
 #include <QMutex>
 #include <QMutexLocker>
 
-class DataGenerator : public QObject
+class DataSource : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool running READ isRunning WRITE setRunning NOTIFY runningChanged)
@@ -17,8 +17,8 @@ class DataGenerator : public QObject
     Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged)
 
 public:
-    explicit DataGenerator(QObject *parent = nullptr);
-    ~DataGenerator();
+    explicit DataSource(QObject* parent = nullptr);
+    virtual ~DataSource();
 
     bool isRunning() const { return m_running; }
     void setRunning(bool running);
@@ -42,10 +42,13 @@ signals:
     void bufferSizeChanged();
     void dataChanged();
 
-private slots:
-    void generateDataPoint();
+protected:
+    virtual double generateValue(double time) = 0;
 
-private:
+private slots:
+    void retrieveDataPoint();
+
+protected:
     QTimer *m_timer;
     QVector<QPointF> m_dataBuffer;
     QMutex m_dataMutex;
@@ -60,4 +63,34 @@ private:
     int m_signalCounter;  // Counter to reduce signal emission frequency
 };
 
-#endif // DATAGENERATOR_H
+// Derived classes
+class SineWave : public DataSource
+{
+    Q_OBJECT
+public:
+    explicit SineWave(QObject* parent = nullptr);
+
+protected:
+    double generateValue(double time) override;
+};
+
+class SquareWave : public DataSource
+{
+    Q_OBJECT
+public:
+    explicit SquareWave(QObject* parent = nullptr);
+
+protected:
+    double generateValue(double time) override;
+};
+
+class TriangleWave : public DataSource
+{
+    Q_OBJECT
+public:
+    explicit TriangleWave(QObject* parent = nullptr);
+
+protected:
+    double generateValue(double time) override;
+};
+#endif // DATASOURCE_H

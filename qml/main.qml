@@ -13,8 +13,8 @@ ApplicationWindow {
     visible: true
     title: qsTr("Real-Time Data Monitor")
 
-    DataGenerator {
-        id: dataGenerator
+    SquareWave {
+        id: squareWaveSource
         frequency: frequencySlider.value
         amplitude: amplitudeSlider.value
         bufferSize: 5000
@@ -22,7 +22,29 @@ ApplicationWindow {
 
         onDataChanged: {
             plotView.updateData()
+        }
+    }
+
+    SineWave {
+        id: sineWaveSource
+        frequency: frequencySlider.value
+        amplitude: amplitudeSlider.value
+        bufferSize: 5000
+        running: startStopButton.checked
+
+        onDataChanged: {
             plotView1.updateData()
+        }
+    }
+
+    TriangleWave {
+        id: triangleWaveSource
+        frequency: frequencySlider.value
+        amplitude: amplitudeSlider.value
+        bufferSize: 5000
+        running: startStopButton.checked
+
+        onDataChanged: {
             plotView2.updateData()
         }
     }
@@ -141,8 +163,8 @@ ApplicationWindow {
                 spacing: 20
 
                 Text {
-                    text: "Status: " + (dataGenerator.running ? "Running" : "Stopped")
-                    color: dataGenerator.running ? "#27ae60" : "#e74c3c"
+                    text: "Status: " + (squareWaveSource.running ? "Running" : "Stopped")
+                    color: squareWaveSource.running ? "#27ae60" : "#e74c3c"
                     font.bold: true
                 }
 
@@ -165,36 +187,38 @@ ApplicationWindow {
                 text: "Clear Data"
 
                 onClicked: {
-                    dataGenerator.clearData()
+                    squareWaveSource.clearData()
+                    sineWaveSource.clearData()
+                    triangleWaveSource.clearData()
                 }
             }
         }
 
-        // Plot View
+        // Plot Views with different data sources
         PlotView {
             id: plotView
-            titleText: "Data Source 0"
+            titleText: "Square Wave"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            dataGenerator: dataGenerator
+            dataGenerator: squareWaveSource
             timeWindow: timeWindowSlider.value
         }
 
         PlotView {
             id: plotView1
-            titleText: "Data Source 1"
+            titleText: "Sine Wave"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            dataGenerator: dataGenerator
+            dataGenerator: sineWaveSource
             timeWindow: timeWindowSlider.value
         }
 
         PlotView {
             id: plotView2
-            titleText: "Data Source 2"
+            titleText: "Triangle Wave"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            dataGenerator: dataGenerator
+            dataGenerator: triangleWaveSource
             timeWindow: timeWindowSlider.value
         }
     }

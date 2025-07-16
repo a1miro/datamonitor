@@ -11,18 +11,21 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     // Register QML types
-    qmlRegisterType<DataGenerator>("DataMonitor", 1, 0, "DataGenerator");
+    qmlRegisterUncreatableType<DataSource>("DataMonitor", 1, 0, "DataSource", "DataSource is abstract");
+    qmlRegisterType<SineWave>("DataMonitor", 1, 0, "SineWave");
+    qmlRegisterType<SquareWave>("DataMonitor", 1, 0, "SquareWave");
+    qmlRegisterType<TriangleWave>("DataMonitor", 1, 0, "TriangleWave");
     qmlRegisterType<PlotRenderer>("DataMonitor", 1, 0, "PlotRenderer");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/DataMonitor/qml/main.qml"));
-    
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    
+
     engine.load(url);
 
     return app.exec();
