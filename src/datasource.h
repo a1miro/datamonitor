@@ -17,7 +17,7 @@ class DataSource : public QObject
     Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged)
 
 public:
-    explicit DataSource(QObject* parent = nullptr);
+    explicit DataSource(QObject *parent = nullptr);
     virtual ~DataSource();
 
     bool isRunning() const { return m_running; }
@@ -63,34 +63,4 @@ protected:
     int m_signalCounter;  // Counter to reduce signal emission frequency
 };
 
-// Derived classes
-class SineWave : public DataSource
-{
-    Q_OBJECT
-public:
-    explicit SineWave(QObject* parent = nullptr);
-
-protected:
-    double generateValue(double time) override;
-};
-
-class SquareWave : public DataSource
-{
-    Q_OBJECT
-public:
-    explicit SquareWave(QObject* parent = nullptr);
-
-protected:
-    double generateValue(double time) override;
-};
-
-class TriangleWave : public DataSource
-{
-    Q_OBJECT
-public:
-    explicit TriangleWave(QObject* parent = nullptr);
-
-protected:
-    double generateValue(double time) override;
-};
 #endif // DATASOURCE_H

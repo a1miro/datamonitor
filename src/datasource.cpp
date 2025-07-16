@@ -1,9 +1,9 @@
-#include "datagenerator.h"
+#include "datasource.h"
 #include <QDebug>
 #include <QtMath>
 
 // Base DataSource class implementation
-DataSource::DataSource(QObject* parent)
+DataSource::DataSource(QObject *parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
     , m_running(false)
@@ -138,42 +138,5 @@ void DataSource::retrieveDataPoint()
     // Emit signal for UI update (outside mutex for better performance)
     if (shouldEmitSignal) {
         emit dataChanged();
-    }
-}
-
-// SineWave implementation
-SineWave::SineWave(QObject* parent) : DataSource(parent)
-{
-}
-
-double SineWave::generateValue(double time)
-{
-    return m_amplitude * qSin(2.0 * M_PI * m_frequency * time);
-}
-
-// SquareWave implementation
-SquareWave::SquareWave(QObject* parent) : DataSource(parent)
-{
-}
-
-double SquareWave::generateValue(double time)
-{
-    double phase = fmod(m_frequency * time, 1.0);
-    return m_amplitude * (phase < 0.5 ? 1.0 : -1.0);
-}
-
-// TriangleWave implementation
-TriangleWave::TriangleWave(QObject* parent) : DataSource(parent)
-{
-}
-
-double TriangleWave::generateValue(double time)
-{
-    double phase = fmod(m_frequency * time, 1.0);
-    if (phase < 0.5) {
-        return m_amplitude * (4.0 * phase - 1.0);
-    }
-    else {
-        return m_amplitude * (3.0 - 4.0 * phase);
     }
 }

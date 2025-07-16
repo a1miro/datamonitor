@@ -11,8 +11,14 @@ qt_standard_project_setup()
 
 qt_add_executable(datamonitor
     src/main.cpp
-    src/datagenerator.cpp
-    src/datagenerator.h
+    src/datasource.cpp
+    src/datasource.h
+    src/sinewave.cpp
+    src/sinewave.h
+    src/squarewave.cpp
+    src/squarewave.h
+    src/trianglewave.cpp
+    src/trianglewave.h
     src/plotrenderer.cpp
     src/plotrenderer.h
     src/plotnode.cpp
@@ -26,8 +32,14 @@ qt_add_qml_module(datamonitor
         qml/main.qml
         qml/PlotView.qml
     SOURCES
-        src/datagenerator.cpp
-        src/datagenerator.h
+        src/datasource.cpp
+        src/datasource.h
+        src/sinewave.cpp
+        src/sinewave.h
+        src/squarewave.cpp
+        src/squarewave.h
+        src/trianglewave.cpp
+        src/trianglewave.h
         src/plotrenderer.cpp
         src/plotrenderer.h
         src/plotnode.cpp

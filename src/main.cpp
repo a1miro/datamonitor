@@ -3,7 +3,10 @@
 #include <QQuickView>
 #include <QtQml>
 
-#include "datagenerator.h"
+#include "datasource.h"
+#include "sinewave.h"
+#include "squarewave.h"
+#include "trianglewave.h"
 #include "plotrenderer.h"
 
 int main(int argc, char *argv[])
