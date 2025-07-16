@@ -22,7 +22,9 @@
             "inherits": "base",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64"
+                "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64",
+                "CMAKE_PREFIX_PATH": "/Users/amironenko/Qt6/6.9.1/macos",
+                "Qt6_DIR": "/Users/amironenko/Qt6/6.9.1/macos/lib/cmake/Qt6"
             },
             "condition": {
                 "type": "equals",
@@ -37,7 +39,9 @@
             "inherits": "base",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64"
+                "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64",
+                "CMAKE_PREFIX_PATH": "/Users/amironenko/Qt6/6.9.1/macos",
+                "Qt6_DIR": "/Users/amironenko/Qt6/6.9.1/macos/lib/cmake/Qt6"
             },
             "condition": {
                 "type": "equals",
@@ -51,10 +55,13 @@
             "description": "Debug build for iOS device (arm64)",
             "inherits": "base",
             "generator": "Xcode",
+            "toolchainFile": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6/qt.toolchain.cmake",
             "cacheVariables": {
                 "CMAKE_SYSTEM_NAME": "iOS",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_OSX_ARCHITECTURES": "arm64"
+                "CMAKE_OSX_ARCHITECTURES": "arm64",
+                "CMAKE_PREFIX_PATH": "/Users/amironenko/Qt6/6.9.1/ios",
+                "Qt6_DIR": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6"
             },
             "condition": {
                 "type": "equals",
@@ -68,10 +75,13 @@
             "description": "Release build for iOS device (arm64)",
             "inherits": "base",
             "generator": "Xcode",
+            "toolchainFile": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6/qt.toolchain.cmake",
             "cacheVariables": {
                 "CMAKE_SYSTEM_NAME": "iOS",
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_OSX_ARCHITECTURES": "arm64"
+                "CMAKE_OSX_ARCHITECTURES": "arm64",
+                "CMAKE_PREFIX_PATH": "/Users/amironenko/Qt6/6.9.1/ios",
+                "Qt6_DIR": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6"
             },
             "condition": {
                 "type": "equals",
@@ -85,11 +95,14 @@
             "description": "Debug build for iOS simulator (x86_64 + arm64)",
             "inherits": "base",
             "generator": "Xcode",
+            "toolchainFile": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6/qt.toolchain.cmake",
             "cacheVariables": {
                 "CMAKE_SYSTEM_NAME": "iOS",
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64",
-                "CMAKE_OSX_SYSROOT": "iphonesimulator"
+                "CMAKE_OSX_SYSROOT": "iphonesimulator",
+                "CMAKE_PREFIX_PATH": "/Users/amironenko/Qt6/6.9.1/ios",
+                "Qt6_DIR": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6"
             },
             "condition": {
                 "type": "equals",
@@ -103,11 +116,14 @@
             "description": "Release build for iOS simulator (x86_64 + arm64)",
             "inherits": "base",
             "generator": "Xcode",
+            "toolchainFile": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6/qt.toolchain.cmake",
             "cacheVariables": {
                 "CMAKE_SYSTEM_NAME": "iOS",
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64",
-                "CMAKE_OSX_SYSROOT": "iphonesimulator"
+                "CMAKE_OSX_SYSROOT": "iphonesimulator",
+                "CMAKE_PREFIX_PATH": "/Users/amironenko/Qt6/6.9.1/ios",
+                "Qt6_DIR": "/Users/amironenko/Qt6/6.9.1/ios/lib/cmake/Qt6"
             },
             "condition": {
                 "type": "equals",
