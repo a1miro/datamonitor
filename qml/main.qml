@@ -173,6 +173,7 @@ ApplicationWindow {
         // Plot View
         PlotView {
             id: plotView
+            titleText: "Data Source 0"
             Layout.fillWidth: true
             Layout.fillHeight: true
             dataGenerator: dataGenerator
@@ -181,6 +182,7 @@ ApplicationWindow {
 
         PlotView {
             id: plotView1
+            titleText: "Data Source 1"
             Layout.fillWidth: true
             Layout.fillHeight: true
             dataGenerator: dataGenerator
@@ -189,6 +191,7 @@ ApplicationWindow {
 
         PlotView {
             id: plotView2
+            titleText: "Data Source 2"
             Layout.fillWidth: true
             Layout.fillHeight: true
             dataGenerator: dataGenerator

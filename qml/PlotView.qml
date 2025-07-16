@@ -12,6 +12,10 @@ Rectangle {
     property real timeWindow: 5.0
     property int dataPointCount: 0
 
+    property alias titleText: title.text
+    property alias yAxisLabelItem: yAxisLabel
+    property alias xAxisLabelItem: xAxisLabel
+
     function updateData() {
         if (dataGenerator) {
             var newData = dataGenerator.getData()
@@ -117,6 +121,7 @@ Rectangle {
 
     // Title
     Text {
+        id: title
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
@@ -128,6 +133,7 @@ Rectangle {
 
     // Y-axis label
     Text {
+        id: yAxisLabel
         anchors.left: parent.left
         anchors.leftMargin: 15
         anchors.verticalCenter: parent.verticalCenter
@@ -140,6 +146,7 @@ Rectangle {
 
     // X-axis label
     Text {
+        id: xAxisLabel
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
