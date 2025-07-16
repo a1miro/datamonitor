@@ -21,13 +21,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<PlotRenderer>("DataMonitor", 1, 0, "PlotRenderer");
 
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/DataMonitor/qml/main.qml"));
+    const QUrl url(QStringLiteral("qrc:/qt/qml/DataMonitor/qml/main.qml"));
 
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject *obj, const QUrl &objUrl)
+                     {
         if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
+            QCoreApplication::exit(-1); }, Qt::QueuedConnection);
 
     engine.load(url);
 
